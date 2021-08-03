@@ -8,12 +8,8 @@ class Snake {
  public:
   enum class Direction { kUp, kDown, kLeft, kRight };
 
-  Snake(int grid_width, int grid_height)
-      : grid_width(grid_width),
-        grid_height(grid_height),
-        head_x(grid_width / 2),
-        head_y(grid_height / 2) {}
-
+  Snake(int grid_width, int grid_height, Snake const &opponent, int random_w, int random_h);
+  static constexpr std::size_t kMaxSize{20};
   void Update();
 
   Direction direction = Direction::kUp;
@@ -25,6 +21,7 @@ class Snake {
   float head_x;
   float head_y;
   std::vector<SDL_Point> body;
+  Snake const &enemy;
 
  private:
   void UpdateHead();

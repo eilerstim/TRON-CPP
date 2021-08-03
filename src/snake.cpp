@@ -1,6 +1,14 @@
 #include "snake.h"
 #include <cmath>
 #include <iostream>
+#include "game.h"
+
+Snake::Snake(int grid_width, int grid_height, Snake const &opponent, int random_w, int random_h) : 
+        grid_width(grid_width),
+        grid_height(grid_height),
+        head_x(random_w),
+        head_y(random_h),
+        enemy(opponent) {}
 
 void Snake::Update() {
   SDL_Point prev_cell{
@@ -53,10 +61,17 @@ void Snake::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell) 
       body.erase(body.begin());
   }
   // Let the trail fade if it becomes too long
-  if(body.size()>15)
+  if(body.size()>kMaxSize)
     body.erase(body.begin());
 
   // How to remove non-connected trails?? Tried with loop that checks distance between the next node and if bigger than 2 will erase the last element
+
+  //Check for collision with opponent's trail
+  for (auto const &item : enemy.body) {
+    if (current_head_cell.x == item.x && current_head_cell.y == item.y) {
+      alive = false;
+    }
+  }
 
   // Check if the snake has died.
   for (auto const &item : body) {

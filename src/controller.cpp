@@ -9,7 +9,7 @@ void Controller::ChangeDirection(Snake &snake, Snake::Direction input,
   return;
 }
 
-void Controller::HandleInput(bool &running, Snake &snake) const {
+void Controller::HandleInput(bool &running, Snake &snake1, Snake &snake2) const {
   SDL_Event e;
   while (SDL_PollEvent(&e)) {
     if (e.type == SDL_QUIT) {
@@ -17,29 +17,54 @@ void Controller::HandleInput(bool &running, Snake &snake) const {
     } else if (e.type == SDL_KEYDOWN) {
       switch (e.key.keysym.sym) {
         case SDLK_w:
-          ChangeDirection(snake, Snake::Direction::kUp,
+          ChangeDirection(snake1, Snake::Direction::kUp,
                           Snake::Direction::kDown);
           break;
 
         case SDLK_s:
-          ChangeDirection(snake, Snake::Direction::kDown,
+          ChangeDirection(snake1, Snake::Direction::kDown,
                           Snake::Direction::kUp);
           break;
 
         case SDLK_a:
-          ChangeDirection(snake, Snake::Direction::kLeft,
+          ChangeDirection(snake1, Snake::Direction::kLeft,
                           Snake::Direction::kRight);
           break;
 
         case SDLK_d:
-          ChangeDirection(snake, Snake::Direction::kRight,
+          ChangeDirection(snake1, Snake::Direction::kRight,
                           Snake::Direction::kLeft);
           break;
         case SDLK_q:
-          snake.speed == 0.1f ? snake.speed = 0.2f : snake.speed = 0.1f;
+          snake1.speed == 0.1f ? snake1.speed = 0.2f : snake1.speed = 0.1f;
           break;
         case SDLK_e:
-          snake.trail == false ? snake.trail = true : snake.trail = false;
+          snake1.trail == false ? snake1.trail = true : snake1.trail = false;
+          break;
+        case SDLK_i:
+          ChangeDirection(snake2, Snake::Direction::kUp,
+                          Snake::Direction::kDown);
+          break;
+
+        case SDLK_k:
+          ChangeDirection(snake2, Snake::Direction::kDown,
+                          Snake::Direction::kUp);
+          break;
+
+        case SDLK_j:
+          ChangeDirection(snake2, Snake::Direction::kLeft,
+                          Snake::Direction::kRight);
+          break;
+
+        case SDLK_l:
+          ChangeDirection(snake2, Snake::Direction::kRight,
+                          Snake::Direction::kLeft);
+          break;
+        case SDLK_u:
+          snake2.speed == 0.1f ? snake2.speed = 0.2f : snake2.speed = 0.1f;
+          break;
+        case SDLK_o:
+          snake2.trail == false ? snake2.trail = true : snake2.trail = false;
           break;
       }
     }

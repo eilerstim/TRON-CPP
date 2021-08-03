@@ -193,6 +193,9 @@ CMakeFiles/Tron.dir/src/renderer.cpp.o: /usr/include/SDL2/SDL_video.h
 CMakeFiles/Tron.dir/src/renderer.cpp.o: /usr/include/SDL2/begin_code.h
 CMakeFiles/Tron.dir/src/renderer.cpp.o: /usr/include/SDL2/close_code.h
 
+CMakeFiles/Tron.dir/src/snake.cpp.o: ../src/controller.h
+CMakeFiles/Tron.dir/src/snake.cpp.o: ../src/game.h
+CMakeFiles/Tron.dir/src/snake.cpp.o: ../src/renderer.h
 CMakeFiles/Tron.dir/src/snake.cpp.o: ../src/snake.cpp
 CMakeFiles/Tron.dir/src/snake.cpp.o: ../src/snake.h
 CMakeFiles/Tron.dir/src/snake.cpp.o: /usr/include/SDL2/SDL.h

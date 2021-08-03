@@ -3,7 +3,12 @@
 #include "SDL.h"
 
 Game::Game(std::size_t grid_width, std::size_t grid_height)
-    : snake(grid_width, grid_height) {}
+    : engine(dev()), 
+      random_w(0, static_cast<int>(grid_width - 1)),
+      random_h(0, static_cast<int>(grid_height - 1)),
+      snake1(grid_width, grid_height, snake2, random_w(engine), random_h(engine)), 
+      snake2(grid_width, grid_height, snake1, random_w(engine), random_h(engine))
+      {}
 
 void Game::Run(Controller const &controller, Renderer &renderer,
                std::size_t target_frame_duration) {
@@ -18,9 +23,9 @@ void Game::Run(Controller const &controller, Renderer &renderer,
     frame_start = SDL_GetTicks();
 
     // Input, Update, Render - the main game loop.
-    controller.HandleInput(running, snake);
+    controller.HandleInput(running, snake1, snake2);
     Update();
-    renderer.Render(snake);
+    renderer.Render(snake1, snake2);
 
     frame_end = SDL_GetTicks();
 
@@ -46,11 +51,9 @@ void Game::Run(Controller const &controller, Renderer &renderer,
 }
 
 void Game::Update() {
-  if (!snake.alive) return;
+  if (!snake1.alive || !snake2.alive) return;
 
-  snake.Update();
-
-  int new_x = static_cast<int>(snake.head_x);
-  int new_y = static_cast<int>(snake.head_y);
+  snake1.Update();
+  snake2.Update();
 
 }
