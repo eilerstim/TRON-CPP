@@ -9,7 +9,7 @@ int main() {
   constexpr std::size_t kMsPerFrame{1000 / kFramesPerSecond};
   constexpr std::size_t kScreenWidth{1280};
   constexpr std::size_t kScreenHeight{720};
-  constexpr std::size_t kGridWidth{96}; //was 32x32 by 640x640
+  constexpr std::size_t kGridWidth{96}; //was 32x32 at 640x640
   constexpr std::size_t kGridHeight{54};
 
   Renderer renderer(kScreenWidth, kScreenHeight, kGridWidth, kGridHeight);

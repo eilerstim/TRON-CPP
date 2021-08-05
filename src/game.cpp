@@ -3,11 +3,9 @@
 #include "SDL.h"
 
 Game::Game(std::size_t grid_width, std::size_t grid_height)
-    : engine(dev()), 
-      random_w(0, static_cast<int>(grid_width - 1)),
-      random_h(0, static_cast<int>(grid_height - 1)),
-      snake1(grid_width, grid_height, snake2, random_w(engine), random_h(engine)), 
-      snake2(grid_width, grid_height, snake1, random_w(engine), random_h(engine))
+    : user(grid_width, grid_height, program, Game::blue, portal), 
+      program(grid_width, grid_height, user, Game::orange, portal),
+      portal(grid_width, grid_height)
       {}
 
 void Game::Run(Controller const &controller, Renderer &renderer,
@@ -18,14 +16,28 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   Uint32 frame_duration;
   int frame_count = 0;
   bool running = true;
+  bool start = false;
 
   while (running) {
     frame_start = SDL_GetTicks();
 
     // Input, Update, Render - the main game loop.
-    controller.HandleInput(running, snake1, snake2);
-    Update();
-    renderer.Render(snake1, snake2);
+    if (start) {
+      controller.HandleInput(running, user, program);
+      Update();
+    }
+    else {
+      controller.ManageStart(start, running);
+    }
+    // Fill screen with the winner's color or continue rendering the game
+    if (!user.alive && !program.alive) 
+      renderer.Fill(draw);
+    else if (user.alive && !program.alive)
+      renderer.Fill(blue);
+    else if (!user.alive && program.alive)
+      renderer.Fill(orange);
+    else
+      renderer.Render(user, program, portal);
 
     frame_end = SDL_GetTicks();
 
@@ -51,9 +63,11 @@ void Game::Run(Controller const &controller, Renderer &renderer,
 }
 
 void Game::Update() {
-  if (!snake1.alive || !snake2.alive) return;
+  // Do not update position if someone is not alive
+  if (!user.alive || !program.alive) 
+    return;
 
-  snake1.Update();
-  snake2.Update();
+  user.Update();
+  program.Update();
 
 }

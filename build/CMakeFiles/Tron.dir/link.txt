@@ -1,1 +1,0 @@
-/usr/bin/g++-7  -std=c++17   CMakeFiles/Tron.dir/src/main.cpp.o CMakeFiles/Tron.dir/src/game.cpp.o CMakeFiles/Tron.dir/src/controller.cpp.o CMakeFiles/Tron.dir/src/renderer.cpp.o CMakeFiles/Tron.dir/src/snake.cpp.o  -o Tron -L/usr/lib/x86_64-linux-gnu  -lSDL2 

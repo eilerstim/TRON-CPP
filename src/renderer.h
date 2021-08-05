@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "SDL.h"
-#include "snake.h"
+#include "player.h"
 
 class Renderer {
  public:
@@ -11,7 +11,8 @@ class Renderer {
            const std::size_t grid_width, const std::size_t grid_height);
   ~Renderer();
 
-  void Render(Snake const snake1, Snake const snake2);
+  void Render(Player const user, Player const program, Portal const &portal);
+  void Fill(int winner);
   void UpdateWindowTitle(int fps);
 
  private:

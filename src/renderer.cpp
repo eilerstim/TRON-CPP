@@ -1,4 +1,6 @@
 #include "renderer.h"
+#include "game.h"
+#include "portal.h"
 #include <iostream>
 #include <string>
 
@@ -16,10 +18,10 @@ Renderer::Renderer(const std::size_t screen_width,
   }
 
   // Create Window
-  sdl_window = SDL_CreateWindow("Snake Game", SDL_WINDOWPOS_CENTERED,
+  sdl_window = SDL_CreateWindow("Player Game", SDL_WINDOWPOS_CENTERED,
                                 SDL_WINDOWPOS_CENTERED, screen_width,
                                 screen_height, SDL_WINDOW_SHOWN);
-
+  // Check if it was able to open up
   if (nullptr == sdl_window) {
     std::cerr << "Window could not be created.\n";
     std::cerr << " SDL_Error: " << SDL_GetError() << "\n";
@@ -38,7 +40,7 @@ Renderer::~Renderer() {
   SDL_Quit();
 }
 
-void Renderer::Render(Snake const snake1, Snake const snake2) {
+void Renderer::Render(Player const user, Player const program, Portal const &portal) {
   SDL_Rect block;
   block.w = screen_width / grid_width;
   block.h = screen_height / grid_height;
@@ -49,45 +51,65 @@ void Renderer::Render(Snake const snake1, Snake const snake2) {
 
   // Render user's body (blue)
   SDL_SetRenderDrawColor(sdl_renderer, 0x26, 0xB4, 0xCA, 0xFF);
-  for (SDL_Point const &point : snake1.body) {
+  for (SDL_Point const &point : user.body) {
     block.x = point.x * block.w;
     block.y = point.y * block.h;
     SDL_RenderFillRect(sdl_renderer, &block);
   }
 
-  // Render snake's head
-  block.x = static_cast<int>(snake1.head_x) * block.w;
-  block.y = static_cast<int>(snake1.head_y) * block.h;
-  if (snake1.alive) {
-    SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0xEA, 0xFF, 0xFF);
-  } else {
-    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-  }
+  // Render user's head
+  block.x = static_cast<int>(user.head_x) * block.w;
+  block.y = static_cast<int>(user.head_y) * block.h;
+  SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0xEA, 0xFF, 0xFF);
   SDL_RenderFillRect(sdl_renderer, &block);
 
     // Render program's body (orange)
   SDL_SetRenderDrawColor(sdl_renderer, 0xDF, 0x74, 0x0C, 0xFF);
-  for (SDL_Point const &point : snake2.body) {
+  for (SDL_Point const &point : program.body) {
     block.x = point.x * block.w;
     block.y = point.y * block.h;
     SDL_RenderFillRect(sdl_renderer, &block);
   }
 
   // Render program's head (orange)
-  block.x = static_cast<int>(snake2.head_x) * block.w;
-  block.y = static_cast<int>(snake2.head_y) * block.h;
-  if (snake2.alive) {
-    SDL_SetRenderDrawColor(sdl_renderer, 0xF7, 0x9D, 0x1E, 0xFF);
-  } else {
-    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-  }
+  block.x = static_cast<int>(program.head_x) * block.w;
+  block.y = static_cast<int>(program.head_y) * block.h;
+  SDL_SetRenderDrawColor(sdl_renderer, 0xF7, 0x9D, 0x1E, 0xFF);
   SDL_RenderFillRect(sdl_renderer, &block);
+
+  // Color every block around the portal white
+  SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+  for (SDL_Point const &point : portal.border) {
+    block.x = point.x * block.w;
+    block.y = point.y * block.h;
+    SDL_RenderFillRect(sdl_renderer, &block);
+  }
 
   // Update Screen
   SDL_RenderPresent(sdl_renderer);
 }
 
+// Print name and FPS Counter to window title
 void Renderer::UpdateWindowTitle(int fps) {
-  std::string title{" FPS: " + std::to_string(fps)};
+  std::string title{"TRON: " + std::to_string(fps) + " FPS"};
   SDL_SetWindowTitle(sdl_window, title.c_str());
+}
+
+void Renderer::Fill(int winner) {
+  // fill screen with the winner's color (white in case of a draw)
+  if (winner == Game::draw) {
+    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    SDL_RenderClear(sdl_renderer);
+  }
+  else if (winner == Game::blue) {
+    SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0xEA, 0xFF, 0xFF);
+    SDL_RenderClear(sdl_renderer);
+  }
+  else if (winner == Game::orange) {
+    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x67, 0x00, 0xFF);
+    SDL_RenderClear(sdl_renderer);
+  }
+
+  // Update Screen
+  SDL_RenderPresent(sdl_renderer);
 }

@@ -1,33 +1,42 @@
-#include "snake.h"
+#include "player.h"
 #include <cmath>
 #include <iostream>
 #include "game.h"
 
-Snake::Snake(int grid_width, int grid_height, Snake const &opponent, int random_w, int random_h) : 
+Player::Player(int grid_width, int grid_height, Player const &opponent, int type, Portal &portal) : 
         grid_width(grid_width),
         grid_height(grid_height),
-        head_x(random_w),
-        head_y(random_h),
-        enemy(opponent) {}
+        enemy(opponent),
+        portal(portal) {
+          if (type == Game::blue) {
+            head_x = static_cast<float>(0);
+            head_y = static_cast<float>(grid_height / 2);
+            direction = Direction::kRight;
+          }
+          else if (type == Game::orange) {
+            head_x = static_cast<float>(grid_width);
+            head_y = static_cast<float>(grid_height / 2);
+            direction = Direction::kLeft;
+          }
+        }
 
-void Snake::Update() {
+void Player::Update() {
   SDL_Point prev_cell{
       static_cast<int>(head_x),
-      static_cast<int>(
-          head_y)};  // We first capture the head's cell before updating.
+      static_cast<int>(head_y)};  // We first capture the head's cell before updating.
+  
   UpdateHead();
   SDL_Point current_cell{
       static_cast<int>(head_x),
       static_cast<int>(head_y)};  // Capture the head's cell after updating.
 
-  // Update all of the body vector items if the snake head has moved to a new
-  // cell.
+  // Update all of the body vector items if the player head has moved to a new cell.
   if (current_cell.x != prev_cell.x || current_cell.y != prev_cell.y) {
     UpdateBody(current_cell, prev_cell);
   }
 }
 
-void Snake::UpdateHead() {
+void Player::UpdateHead() {
   switch (direction) {
     case Direction::kUp:
       head_y -= speed;
@@ -46,12 +55,20 @@ void Snake::UpdateHead() {
       break;
   }
 
-  // Wrap the Snake around to the beginning if going off of the screen.
+  // Check if player is entering the portal
+  if (static_cast<int>(head_x) == static_cast<int>(portal.pos_x) && static_cast<int>(head_y) == static_cast<int>(portal.pos_y)) {
+    head_x = portal.random_w(portal.engine);
+    head_y = portal.random_h(portal.engine);
+  }
+
+  // Wrap the Player around to the beginning if going off of the screen.
   head_x = fmod(head_x + grid_width, grid_width);
   head_y = fmod(head_y + grid_height, grid_height);
+
 }
 
-void Snake::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell) {
+void Player::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell) {
+
   if(trail == true)
     // Add length to trail by adding previous head location to vector
     body.push_back(prev_head_cell);
@@ -64,8 +81,6 @@ void Snake::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell) 
   if(body.size()>kMaxSize)
     body.erase(body.begin());
 
-  // How to remove non-connected trails?? Tried with loop that checks distance between the next node and if bigger than 2 will erase the last element
-
   //Check for collision with opponent's trail
   for (auto const &item : enemy.body) {
     if (current_head_cell.x == item.x && current_head_cell.y == item.y) {
@@ -73,7 +88,7 @@ void Snake::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell) 
     }
   }
 
-  // Check if the snake has died.
+  // Check for collision with own trail
   for (auto const &item : body) {
     if (current_head_cell.x == item.x && current_head_cell.y == item.y) {
       alive = false;
