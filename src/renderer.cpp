@@ -77,7 +77,7 @@ void Renderer::Render(Player const user, Player const program, Portal const &por
   SDL_SetRenderDrawColor(sdl_renderer, 0xF7, 0x9D, 0x1E, 0xFF);
   SDL_RenderFillRect(sdl_renderer, &block);
 
-  // Color every block around the portal white
+  // Render outline of the portal
   SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
   for (SDL_Point const &point : portal.border) {
     block.x = point.x * block.w;
@@ -96,7 +96,7 @@ void Renderer::UpdateWindowTitle(int fps) {
 }
 
 void Renderer::Fill(int winner) {
-  // fill screen with the winner's color (white in case of a draw)
+  // Fill screen with the winner's color (white in case of a draw)
   if (winner == Game::draw) {
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
     SDL_RenderClear(sdl_renderer);

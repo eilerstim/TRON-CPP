@@ -9,11 +9,13 @@ Player::Player(int grid_width, int grid_height, Player const &opponent, int type
         enemy(opponent),
         portal(portal) {
           if (type == Game::blue) {
+            // If it is a user, set coordinates to the left edge of the screen
             head_x = static_cast<float>(0);
             head_y = static_cast<float>(grid_height / 2);
             direction = Direction::kRight;
           }
           else if (type == Game::orange) {
+            // If it is a program, set coordinates to the right edge of the screen
             head_x = static_cast<float>(grid_width);
             head_y = static_cast<float>(grid_height / 2);
             direction = Direction::kLeft;
@@ -55,8 +57,11 @@ void Player::UpdateHead() {
       break;
   }
 
-  // Check if player is entering the portal
+  // Check if the player is entering the portal
+  // This further prevents the player from having the portal as part
+  // of his trail because the head is directly set to a new random location.
   if (static_cast<int>(head_x) == static_cast<int>(portal.pos_x) && static_cast<int>(head_y) == static_cast<int>(portal.pos_y)) {
+    // Set head coordinates to a random position on the grid
     head_x = portal.random_w(portal.engine);
     head_y = portal.random_h(portal.engine);
   }

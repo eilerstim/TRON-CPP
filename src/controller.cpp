@@ -4,11 +4,13 @@
 #include "player.h"
 
 void Controller::ManageStart(bool &start, bool &running) const {
+  // Wait for a key to be pressed and then start the game
   SDL_Event e;
   while (SDL_PollEvent(&e)) {
     if (e.type == SDL_QUIT) {
       running = false;
-    } else if (e.type == SDL_KEYDOWN) {
+    } 
+    else if (e.type == SDL_KEYDOWN) {
       start = true;
     }
   }
@@ -26,7 +28,8 @@ void Controller::HandleInput(bool &running, Player &user, Player &program) const
   while (SDL_PollEvent(&e)) {
     if (e.type == SDL_QUIT) {
       running = false;
-    } else if (e.type == SDL_KEYDOWN) {
+    } 
+    else if (e.type == SDL_KEYDOWN) {
       switch (e.key.keysym.sym) {
         case SDLK_w:
           ChangeDirection(user, Player::Direction::kUp,
@@ -75,9 +78,11 @@ void Controller::HandleInput(bool &running, Player &user, Player &program) const
                           Player::Direction::kLeft);
           break;
         case SDLK_u:
+          // Toggle between high and low speed
           program.speed == 0.1f ? program.speed = 0.2f : program.speed = 0.1f;
           break;
         case SDLK_o:
+          // Activate and deactivate trail
           program.trail == false ? program.trail = true : program.trail = false;
           break;
         case SDLK_RETURN:

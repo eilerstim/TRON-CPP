@@ -3,6 +3,7 @@
 
 #include "player.h"
 
+// Controller class that handles all keyboard presses
 class Controller {
  public:
   void HandleInput(bool &running, Player &user,Player &program) const;

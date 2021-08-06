@@ -35,7 +35,10 @@ class Portal {
 
         float pos_x;
         float pos_y;
+        // Contains all points around the portal to draw a white outline around it
         std::vector<SDL_Point> border;
+
+        //Random number generating engine
         std::random_device dev {};
         std::mt19937 engine{dev()};
         std::uniform_real_distribution<float> random_w;

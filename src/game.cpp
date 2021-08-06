@@ -15,7 +15,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
   Uint32 frame_end;
   Uint32 frame_duration;
   int frame_count = 0;
-  bool running = true;
+  bool running = true; // Will be set to false if we close the window
   bool start = false;
 
   while (running) {
@@ -27,6 +27,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
       Update();
     }
     else {
+      // Wait for a button press before starting the game
       controller.ManageStart(start, running);
     }
     // Fill screen with the winner's color or continue rendering the game
