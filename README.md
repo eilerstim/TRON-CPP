@@ -1,4 +1,4 @@
-# TRON (WRITTEN IN C++)
+# TRON
 
 Hello user,
 
