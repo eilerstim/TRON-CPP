@@ -1,16 +1,18 @@
 # TRON (WRITTEN IN C++)
 
-Hello User,
+Hello user,
 
-welcome to the Grid. The programs noticed your arrival. That is why you will have to prove yourself in the arena. It is only you, your Light Cycle and the enemy.
+welcome to the Grid. 
+
+<img src="snake_game.gif"/>
+
+The programs noticed your arrival. That is why you will have to prove yourself in the arena. It is only you, your Light Cycle and the enemy.
 
 Your Light Cycle is powered by pure liquid energy, it has two speed modes and the Light Ribbons it produces can be toggled on or off at any time. Let your opponent ride into them and you will win the game.
 
 In the center you can find a portal which will teleport you to a random location inside the arena. But be careful, it might as well beam you into the Light Ribbon of your enemy.
 
 If you can overcome this challenge, the grid will light up in your color.
-
-<img src="snake_game.gif"/>
 
 ## Controls
 
