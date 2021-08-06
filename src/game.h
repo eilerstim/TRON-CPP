@@ -14,7 +14,7 @@ class Game {
   void Run(Controller const &controller, Renderer &renderer,
            std::size_t target_frame_duration);
 
-  enum winner {draw,blue,orange};
+  enum Type { kDraw, kBlue, kOrange };
 
  private:
   Player user;

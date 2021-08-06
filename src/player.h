@@ -13,8 +13,7 @@ class Player {
   static constexpr std::size_t kMaxSize{20};
   void Update();
 
-  Direction direction = Direction::kUp;
-
+  Direction direction;
   float speed{0.1f};
   const int size{7};
   bool trail{false};

@@ -63,8 +63,9 @@ void Renderer::Render(Player const user, Player const program, Portal const &por
   SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0xEA, 0xFF, 0xFF);
   SDL_RenderFillRect(sdl_renderer, &block);
 
-    // Render program's body (orange)
-  SDL_SetRenderDrawColor(sdl_renderer, 0xDF, 0x74, 0x0C, 0xFF);
+  // Render program's body (orange)
+  // Different color for better head visibility
+  SDL_SetRenderDrawColor(sdl_renderer, 0xDF, 0x74, 0x0C, 0x99);
   for (SDL_Point const &point : program.body) {
     block.x = point.x * block.w;
     block.y = point.y * block.h;
@@ -97,15 +98,15 @@ void Renderer::UpdateWindowTitle(int fps) {
 
 void Renderer::Fill(int winner) {
   // Fill screen with the winner's color (white in case of a draw)
-  if (winner == Game::draw) {
+  if (winner == Game::kDraw) {
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
     SDL_RenderClear(sdl_renderer);
   }
-  else if (winner == Game::blue) {
+  else if (winner == Game::kBlue) {
     SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0xEA, 0xFF, 0xFF);
     SDL_RenderClear(sdl_renderer);
   }
-  else if (winner == Game::orange) {
+  else if (winner == Game::kOrange) {
     SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0x67, 0x00, 0xFF);
     SDL_RenderClear(sdl_renderer);
   }

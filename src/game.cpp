@@ -3,8 +3,8 @@
 #include "SDL.h"
 
 Game::Game(std::size_t grid_width, std::size_t grid_height)
-    : user(grid_width, grid_height, program, Game::blue, portal), 
-      program(grid_width, grid_height, user, Game::orange, portal),
+    : user(grid_width, grid_height, program, Game::kBlue, portal), 
+      program(grid_width, grid_height, user, Game::kOrange, portal),
       portal(grid_width, grid_height)
       {}
 
@@ -27,16 +27,16 @@ void Game::Run(Controller const &controller, Renderer &renderer,
       Update();
     }
     else {
-      // Wait for a button press before starting the game
+      // Wait for a button press before starting the game.
       controller.ManageStart(start, running);
     }
-    // Fill screen with the winner's color or continue rendering the game
+    // Fill screen with the winner's color or continue rendering the game.
     if (!user.alive && !program.alive) 
-      renderer.Fill(draw);
+      renderer.Fill(kDraw);
     else if (user.alive && !program.alive)
-      renderer.Fill(blue);
+      renderer.Fill(kBlue);
     else if (!user.alive && program.alive)
-      renderer.Fill(orange);
+      renderer.Fill(kOrange);
     else
       renderer.Render(user, program, portal);
 
@@ -64,7 +64,7 @@ void Game::Run(Controller const &controller, Renderer &renderer,
 }
 
 void Game::Update() {
-  // Do not update position if someone is not alive
+  // Do not update position if someone is not alive.
   if (!user.alive || !program.alive) 
     return;
 

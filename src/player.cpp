@@ -8,14 +8,14 @@ Player::Player(int grid_width, int grid_height, Player const &opponent, int type
         grid_height(grid_height),
         enemy(opponent),
         portal(portal) {
-          if (type == Game::blue) {
-            // If it is a user, set coordinates to the left edge of the screen
+          if (type == Game::kBlue) {
+            // If it is a user, set coordinates to the left edge of the screen.
             head_x = static_cast<float>(0);
             head_y = static_cast<float>(grid_height / 2);
             direction = Direction::kRight;
           }
-          else if (type == Game::orange) {
-            // If it is a program, set coordinates to the right edge of the screen
+          else if (type == Game::kOrange) {
+            // If it is a program, set coordinates to the right edge of the screen.
             head_x = static_cast<float>(grid_width);
             head_y = static_cast<float>(grid_height / 2);
             direction = Direction::kLeft;
@@ -57,8 +57,8 @@ void Player::UpdateHead() {
       break;
   }
 
-  // Check if the player is entering the portal
-  // This further prevents the player from having the portal as part
+  // Check if the player is entering the portal.
+  // This further prevents the player from having the portal point as part
   // of his trail because the head is directly set to a new random location.
   if (static_cast<int>(head_x) == static_cast<int>(portal.pos_x) && static_cast<int>(head_y) == static_cast<int>(portal.pos_y)) {
     // Set head coordinates to a random position on the grid
@@ -66,7 +66,7 @@ void Player::UpdateHead() {
     head_y = portal.random_h(portal.engine);
   }
 
-  // Wrap the Player around to the beginning if going off of the screen.
+  // Wrap the Player around to the beginning if going off of the screen
   head_x = fmod(head_x + grid_width, grid_width);
   head_y = fmod(head_y + grid_height, grid_height);
 
@@ -75,14 +75,14 @@ void Player::UpdateHead() {
 void Player::UpdateBody(SDL_Point &current_head_cell, SDL_Point &prev_head_cell) {
 
   if(trail == true)
-    // Add length to trail by adding previous head location to vector
+    // Add length to trail by adding previous head location to vector.
     body.push_back(prev_head_cell);
   else {
-    // When the trail is switched off, let it fade slowly
+    // When the trail is switched off, let it fade slowly.
     if (!body.empty())
       body.erase(body.begin());
   }
-  // Let the trail fade if it becomes too long
+  // Let the trail fade if it becomes too long.
   if(body.size()>kMaxSize)
     body.erase(body.begin());
 

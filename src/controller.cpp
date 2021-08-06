@@ -4,7 +4,7 @@
 #include "player.h"
 
 void Controller::ManageStart(bool &start, bool &running) const {
-  // Wait for a key to be pressed and then start the game
+  // Wait for a key to be pressed and then start the game.
   SDL_Event e;
   while (SDL_PollEvent(&e)) {
     if (e.type == SDL_QUIT) {
@@ -86,7 +86,7 @@ void Controller::HandleInput(bool &running, Player &user, Player &program) const
           program.trail == false ? program.trail = true : program.trail = false;
           break;
         case SDLK_RETURN:
-          // Reset the game if it has finished by pressing enter
+          // Reset the game if it has finished by pressing enter.
           if (!user.alive || !program.alive) {
             Reset(user,program);
           }
@@ -97,7 +97,7 @@ void Controller::HandleInput(bool &running, Player &user, Player &program) const
 }
 
 void Controller::Reset(Player &user, Player &program) const{
-  //reset all attributes of each player
+  // Reset all attributes of each player
   user.trail = false;
   user.alive = true;
   user.head_x = 0.0;
