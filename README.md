@@ -6,7 +6,7 @@ welcome to the Grid.
 
 <img src="tron.gif"/>
 
-The programs noticed your arrival. That is why you will have to prove yourself in the arena. It is only you, your Light Cycle and the enemy.
+The programs have noticed your arrival. That is why you will have to prove yourself in the arena. It is only you, your Light Cycle and the enemy.
 
 Your Light Cycle is powered by pure liquid energy, it has two speed modes and the Light Ribbons it produces can be toggled on or off at any time. Let your opponent ride into them and you will win the game.
 
