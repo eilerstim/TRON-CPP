@@ -4,7 +4,7 @@ Hello user,
 
 welcome to the Grid. 
 
-<img src="snake_game.gif"/>
+<img src="tron.gif"/>
 
 The programs noticed your arrival. That is why you will have to prove yourself in the arena. It is only you, your Light Cycle and the enemy.
 
