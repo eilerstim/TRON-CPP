@@ -49,6 +49,14 @@ void Renderer::Render(Player const &user, Player const &program, Portal const &p
   SDL_SetRenderDrawColor(sdl_renderer, 0x1E, 0x1E, 0x1E, 0xFF);
   SDL_RenderClear(sdl_renderer);
 
+  // Render outline of the portal
+  SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+  for (SDL_Point const &point : portal.border) {
+    block.x = point.x * block.w;
+    block.y = point.y * block.h;
+    SDL_RenderFillRect(sdl_renderer, &block);
+  }
+  
   // Render user's body (blue)
   SDL_SetRenderDrawColor(sdl_renderer, 0x26, 0xB4, 0xCA, 0xFF);
   for (SDL_Point const &point : user.body) {
@@ -56,12 +64,6 @@ void Renderer::Render(Player const &user, Player const &program, Portal const &p
     block.y = point.y * block.h;
     SDL_RenderFillRect(sdl_renderer, &block);
   }
-
-  // Render user's head
-  block.x = static_cast<int>(user.head_x) * block.w;
-  block.y = static_cast<int>(user.head_y) * block.h;
-  SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0xEA, 0xFF, 0xFF);
-  SDL_RenderFillRect(sdl_renderer, &block);
 
   // Render program's body (orange)
   // Different color for better head visibility
@@ -71,20 +73,18 @@ void Renderer::Render(Player const &user, Player const &program, Portal const &p
     block.y = point.y * block.h;
     SDL_RenderFillRect(sdl_renderer, &block);
   }
+  
+  // Render user's head
+  block.x = static_cast<int>(user.head_x) * block.w;
+  block.y = static_cast<int>(user.head_y) * block.h;
+  SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0xEA, 0xFF, 0xFF);
+  SDL_RenderFillRect(sdl_renderer, &block);
 
   // Render program's head (orange)
   block.x = static_cast<int>(program.head_x) * block.w;
   block.y = static_cast<int>(program.head_y) * block.h;
   SDL_SetRenderDrawColor(sdl_renderer, 0xF7, 0x9D, 0x1E, 0xFF);
   SDL_RenderFillRect(sdl_renderer, &block);
-
-  // Render outline of the portal
-  SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-  for (SDL_Point const &point : portal.border) {
-    block.x = point.x * block.w;
-    block.y = point.y * block.h;
-    SDL_RenderFillRect(sdl_renderer, &block);
-  }
 
   // Update Screen
   SDL_RenderPresent(sdl_renderer);
