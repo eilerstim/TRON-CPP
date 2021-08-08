@@ -70,3 +70,31 @@ This work is licensed under a
 [cc-by-sa]: http://creativecommons.org/licenses/by-sa/4.0/
 [cc-by-sa-image]: https://licensebuttons.net/l/by-sa/4.0/88x31.png
 [cc-by-sa-shield]: https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg
+
+## Class structure
+
+* Controller: A class that handles all input events
+* Game: Contains the main game loop (Input, Update, Render) and keeps track of the frame rate. It has two instances of the player class as attributes.
+* Player: Handles the logic (position, movement and collision detection)
+* Renderer: Draws player, portal, etc. to the screen
+* Portal: encapsulates random number generating engine and posiiton of the portal
+
+## Adressed rubric points
+
+> The project demonstrates an understanding of C++ functions and control structures.
+Several functions and conditionals were used throughout the program. Example: controller.cpp line 6
+
+> The project accepts user input and processes the input.
+The controller class handles all keyboard input.
+
+> The project uses Object Oriented Programming techniques.
+> Classes encapsulate behavior.
+One example could be the Portal class in portal.h that encapsulates a random number generating engine.
+
+> Class constructors utilize member initialization lists.
+This can be found in almost all classes. Example: portal.h line 9
+
+> The project makes use of references in function declarations.
+Examples: controller.cpp line 6 or game.cpp line 11
+
+I am sure there are other rubric points to be found in addition to those that are mentioned above.
