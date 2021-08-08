@@ -11,7 +11,7 @@ class Renderer {
            const std::size_t grid_width, const std::size_t grid_height);
   ~Renderer();
 
-  void Render(Player const user, Player const program, Portal const &portal);
+  void Render(Player const &user, Player const &program, Portal const &portal);
   void Fill(int winner);
   void UpdateWindowTitle(int fps);
 
