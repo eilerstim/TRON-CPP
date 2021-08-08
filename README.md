@@ -82,19 +82,24 @@ This work is licensed under a
 ## Adressed rubric points
 
 > The project demonstrates an understanding of C++ functions and control structures.
-Several functions and conditionals were used throughout the program. Example: controller.cpp line 6
+
+Several functions and conditionals were used throughout the program. Example: `controller.cpp` line 6
 
 > The project accepts user input and processes the input.
+
 The controller class handles all keyboard input.
 
 > The project uses Object Oriented Programming techniques.
 > Classes encapsulate behavior.
+
 One example could be the Portal class in portal.h that encapsulates a random number generating engine.
 
 > Class constructors utilize member initialization lists.
-This can be found in almost all classes. Example: portal.h line 9
+
+This can be found in almost all classes. Example: `portal.h` line 9
 
 > The project makes use of references in function declarations.
-Examples: controller.cpp line 6 or game.cpp line 11
+
+Examples: `controller.cpp` line 6 or `game.cpp` line 11
 
 I am sure there are other rubric points to be found in addition to those that are mentioned above.
